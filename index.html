@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizarra Digital - Colegio Montano - Expresiones Idiomáticas</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Configuración del tema con la paleta de colores institucional del Colegio Montano -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        montanoAzul: '#1269A8',
+                        montanoAmarillo: '#F7D615',
+                        montanoVerdeGris: '#54887D',
+                        montanoAzulClaro: '#88B5C7',
+                        montanoVerdeOliva: '#A6B046',
+                        montanoFondo: '#F2F5E9',
+                    },
+                    fontFamily: {
+                        sans: ['Segoe UI', 'Tahoma', 'Verdana', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F2F5E9;
+            color: #1a202c;
+        }
+        .tab-btn.active {
+            background-color: #1269A8;
+            color: white;
+            border-bottom: 4px solid #F7D615;
+            font-weight: bold;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 600px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans">
+
+    <!-- ENCABEZADO INSTITUCIONAL -->
+    <header class="bg-montanoAzul text-white shadow-md p-4 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <!-- Logo e Identidad Institucional -->
+            <div class="flex items-center space-x-4">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyEop0yf6lZ7Jk9MILZxF1rBj4Oqs5esyhIQ&s" 
+                     alt="Logo Colegio Montano" 
+                     class="h-12 w-auto bg-white p-1 rounded-md shadow"
+                     onerror="this.src='https://placehold.co/120x50/1269A8/FFFFFF?text=MONTANO'">
+                <div>
+                    <h1 class="text-xl font-bold text-montanoAmarillo leading-tight">Colegio Montano</h1>
+                    <p class="text-xs text-gray-200">Pizarra Digital Interactiva - Plan Diario (Duración total: 50 minutos)</p>
+                </div>
+            </div>
+
+            <!-- Datos Informativos de la Clase -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs bg-white/10 p-2 rounded-lg border border-white/20">
+                <div><span class="font-semibold text-montanoAmarillo">Curso:</span> Comun. y Lenguaje</div>
+                <div><span class="font-semibold text-montanoAmarillo">Grado:</span> 4to Primaria</div>
+                <div><span class="font-semibold text-montanoAmarillo">Tema:</span> Expresiones Idiomáticas</div>
+                <div><span class="font-semibold text-montanoAmarillo">Docente:</span> Andrea Aguilar</div>
+                <div><span class="font-semibold text-montanoAmarillo">Unidad:</span> 1</div>
+                <div><span class="font-semibold text-montanoAmarillo">Plan N°:</span> 2</div>
+                <div><span class="font-semibold text-montanoAmarillo">Fecha:</span> Enero 2027</div>
+                <div><span class="font-semibold text-montanoAmarillo">Modelo:</span> Hábitos Montano</div>
+            </div>
+
+            <!-- Botón para Pantalla Completa -->
+            <button onclick="toggleFullScreen()" class="bg-montanoAmarillo hover:bg-yellow-400 text-montanoAzul font-bold px-3 py-2 rounded-lg flex items-center gap-2 shadow transition text-sm">
+                <i class="fa-solid fa-expand"></i>
+                <span class="hidden sm:inline">Pantalla Completa</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MARCO PEDAGÓGICO INSTITUCIONAL (ENFOQUE, CNB Y HÁBITOS) -->
+    <section class="max-w-7xl mx-auto w-full p-4 my-2">
+        <div class="bg-white rounded-xl shadow-sm border-l-4 border-montanoVerdeGris p-4 grid md:grid-cols-3 gap-4 text-xs md:text-sm">
+            <div>
+                <h3 class="font-bold text-montanoAzul flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap text-montanoVerdeOliva"></i> Competencia CNB & Logro
+                </h3>
+                <p class="mt-1 text-gray-700"><strong>Competencia:</strong> Aplica vocabulario variado, riqueza sintáctica y adecuación contextual en sus comunicaciones orales y escritas (CNB 4to Primaria).</p>
+                <p class="mt-1 text-gray-700"><strong>Logro:</strong> Interpreta y emplea expresiones idiomáticas diferenciando el sentido literal del sentido figurado en textos y situaciones cotidianas.</p>
+            </div>
+            <div>
+                <h3 class="font-bold text-montanoAzul flex items-center gap-2">
+                    <i class="fa-solid fa-brain text-montanoVerdeOliva"></i> Competencias Clave & Hábitos
+                </h3>
+                <p class="mt-1 text-gray-700"><strong>Competencias Clave:</strong> Análisis semántico, pensamiento crítico, pragmática del lenguaje y apreciación cultural.</p>
+                <p class="mt-1 text-gray-700"><strong>Hábitos Montano:</strong> <span class="bg-montanoAmarillo/30 px-1 rounded font-semibold">Buscar primero entender, luego ser entendido</span> (descifrar el sentido figurado) y <span class="bg-montanoAmarillo/30 px-1 rounded font-semibold">Sinergizar</span>.</p>
+            </div>
+            <div>
+                <h3 class="font-bold text-montanoAzul flex items-center gap-2">
+                    <i class="fa-solid fa-box-archive text-montanoVerdeOliva"></i> Recursos & Momentos Eval.
+                </h3>
+                <p class="mt-1 text-gray-700"><strong>Recursos:</strong> Libro de texto Susaeta (pág. 34), pizarra digital interactiva, cuadernos, tarjetas con expresiones y crayones.</p>
+                <p class="mt-1 text-gray-700"><strong>Evaluación:</strong> Inicial (Análisis del dibujo "Ojo de la cara"), Formativa (Guía de características y equivalencias), Sumativa (Rúbrica de Plenaria y Juego interactivo).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NAVEGACIÓN DE PESTAÑAS (SECUENCIA DIDÁCTICA - 50 MINUTOS) -->
+    <main class="max-w-7xl mx-auto w-full flex-grow px-4 pb-8">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+            <!-- Barra de Pestañas -->
+            <div class="flex flex-wrap border-b border-gray-200 bg-gray-50 text-sm md:text-base">
+                <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn active flex-1 py-3 px-4 text-center font-semibold text-gray-600 hover:text-montanoAzul flex items-center justify-center gap-2 transition">
+                    <i class="fa-solid fa-lightbulb text-montanoAmarillo"></i> I) Introducción Motivante (5 min)
+                </button>
+                <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn flex-1 py-3 px-4 text-center font-semibold text-gray-600 hover:text-montanoAzul flex items-center justify-center gap-2 transition">
+                    <i class="fa-solid fa-user-pen text-montanoAzulClaro"></i> II) Trabajo Individual (15 min)
+                </button>
+                <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn flex-1 py-3 px-4 text-center font-semibold text-gray-600 hover:text-montanoAzul flex items-center justify-center gap-2 transition">
+                    <i class="fa-solid fa-people-group text-montanoVerdeGris"></i> III) Trabajo Cooperativo (18 min)
+                </button>
+                <button onclick="switchTab('tab4')" id="btn-tab4" class="tab-btn flex-1 py-3 px-4 text-center font-semibold text-gray-600 hover:text-montanoVerdeOliva flex items-center justify-center gap-2 transition">
+                    <i class="fa-solid fa-comments text-montanoVerdeOliva"></i> IV) Plenaria & Evaluación (12 min)
+                </button>
+            </div>
+
+            <!-- CONTENIDO DE LAS PESTAÑAS -->
+            <div class="p-6">
+
+                <!-- PESTAÑA I: INTRODUCCIÓN MOTIVANTE (5 MINUTOS) -->
+                <div id="tab1" class="tab-content block space-y-6">
+                    <div class="bg-yellow-50 border-l-4 border-montanoAmarillo p-4 rounded-r-md">
+                        <h2 class="text-lg font-bold text-montanoAzul flex items-center gap-2">
+                            <i class="fa-solid fa-face-laugh-beam text-montanoAmarillo"></i> Dinámica: "¿Sentido Literal o Sentido Figurado?" (5 min)
+                        </h2>
+                        <p class="text-sm text-gray-700 mt-1">
+                            Activación de conocimientos previos a través de la ilustración de la página 34 del libro de texto.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3">
+                            <h3 class="font-semibold text-montanoAzul flex items-center gap-2">
+                                <i class="fa-solid fa-eye text-montanoVerdeGris"></i> Observa la Viñeta del Libro (Pág. 34):
+                            </h3>
+                            <div class="p-3 bg-white rounded border border-gray-200 text-sm space-y-2">
+                                <p class="text-gray-800"><strong>Niño 1:</strong> <em>"Estoy muy molesta porque el nuevo teléfono me costó un ojo de la cara."</em></p>
+                                <p class="text-gray-800"><strong>Niño 2 (confundido pensando en una niña con parche):</strong> <em>"¿Qué dice?"</em></p>
+                            </div>
+                            <p class="text-xs text-gray-600 italic">
+                                ¿Por qué el niño imaginó a una persona con parche en el ojo? ¡Porque confundió el <strong>sentido literal</strong> con el <strong>sentido figurado</strong>!
+                            </p>
+                        </div>
+
+                        <div class="bg-montanoAzul/5 p-4 rounded-lg border border-montanoAzul/20 space-y-3">
+                            <h3 class="font-semibold text-montanoAzul flex items-center gap-2">
+                                <i class="fa-solid fa-key text-montanoAzulClaro"></i> Concepto Clave:
+                            </h3>
+                            <div class="p-4 bg-white rounded shadow-sm border-l-4 border-montanoAzul text-sm text-gray-700 space-y-2">
+                                <p class="font-bold text-montanoAzul">¿Qué son las Expresiones Idiomáticas?</p>
+                                <p>Son frases cuyo significado no se deduce del sentido directo o literal de cada palabra, sino de un <strong>sentido figurado</strong> compartido por los hablantes de una región o idioma.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PESTAÑA II: TRABAJO INDIVIDUAL (15 MINUTOS) -->
+                <div id="tab2" class="tab-content hidden space-y-6">
+                    <div class="bg-blue-50 border-l-4 border-montanoAzulClaro p-4 rounded-r-md">
+                        <h2 class="text-lg font-bold text-montanoAzul flex items-center gap-2">
+                            <i class="fa-solid fa-book-open"></i> Guía Didáctica: Características de las Expresiones Idiomáticas
+                        </h2>
+                        <p class="text-sm text-gray-700 mt-1">
+                            Consulta la página 34 de tu libro de texto y aprende a identificar sus reglas esenciales.
+                        </p>
+                    </div>
+
+                    <!-- 5 CARACTERÍSTICAS DEL LIBRO -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs md:text-sm">
+                        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm border-t-4 border-montanoAzul">
+                            <strong class="text-montanoAzul text-sm block mb-1"><i class="fa-solid fa-layer-group"></i> 1. Formadas por varias palabras</strong>
+                            <p class="text-gray-600">Están compuestas por dos o más palabras fijas.</p>
+                            <p class="italic text-gray-500 mt-1">Ej: "Pan comido"</p>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm border-t-4 border-montanoAmarillo">
+                            <strong class="text-montanoAzul text-sm block mb-1"><i class="fa-solid fa-lock"></i> 2. Son Invariables</strong>
+                            <p class="text-gray-600">No se modifica su estructura gramatical ni orden.</p>
+                            <p class="italic text-gray-500 mt-1">No es igual decir "pasarse de la raya" que "la raya fue pasada por él".</p>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm border-t-4 border-montanoVerdeGris">
+                            <strong class="text-montanoAzul text-sm block mb-1"><i class="fa-solid fa-ban"></i> 3. No admiten sinónimos</strong>
+                            <p class="text-gray-600">Si cambias una palabra, pierde la expresión idiomática.</p>
+                            <p class="italic text-gray-500 mt-1">"Meter la pata" ≠ "Introducir la pata".</p>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm border-t-4 border-montanoAzulClaro">
+                            <strong class="text-montanoAzul text-sm block mb-1"><i class="fa-solid fa-masks-theater"></i> 4. Sentido Figurado</strong>
+                            <p class="text-gray-600">Adaptan un significado contextual y no directo.</p>
+                            <p class="italic text-gray-500 mt-1">"Hablar por los codos" no implica que la boca esté en el codo.</p>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm border-t-4 border-montanoVerdeOliva sm:col-span-2 md:col-span-2">
+                            <strong class="text-montanoAzul text-sm block mb-1"><i class="fa-solid fa-earth-americas"></i> 5. Varían según la región o país</strong>
+                            <p class="text-gray-600">Cambian entre países hispanohablantes.</p>
+                            <p class="italic text-gray-500 mt-1">En Guatemala se dice <strong>"a un paso de perico"</strong> para indicar cercanía, mientras que en España se dice <strong>"a un tiro de piedra"</strong>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Ejercicio Práctico Individual de Interpretación -->
+                    <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm space-y-3">
+                        <h3 class="font-bold text-gray-800 text-sm md:text-base">Ejercicio de Interpretación (En tu cuaderno)</h3>
+                        <p class="text-sm text-gray-600">Relaciona cada expresión idiomática del libro con su verdadero significado:</p>
+
+                        <div class="grid md:grid-cols-2 gap-2 text-sm">
+                            <div class="p-2 bg-gray-50 rounded border"><strong>a. Pasarse de la raya:</strong> Rebasar los límites de lo permitido.</div>
+                            <div class="p-2 bg-gray-50 rounded border"><strong>b. Pan comido:</strong> Facilidad para conseguir algo.</div>
+                            <div class="p-2 bg-gray-50 rounded border"><strong>c. Andarse por las ramas:</strong> Evadir el asunto principal.</div>
+                            <div class="p-2 bg-gray-50 rounded border"><strong>d. Hacerse de la vista gorda:</strong> Fingir no ver una falta.</div>
+                        </div>
+
+                        <!-- Botón Desplegable con Orientación/Solución -->
+                        <div class="pt-2">
+                            <button onclick="toggleAccordion('solucion-expresiones')" class="bg-montanoAzul text-white px-4 py-2 rounded-md text-xs font-semibold hover:bg-montanoVerdeGris transition flex items-center gap-2">
+                                <i class="fa-solid fa-eye"></i> Desplegar Verificación de Modismos Adicionales
+                            </button>
+                            <div id="solucion-expresiones" class="accordion-content mt-2 bg-green-50 border border-green-200 p-3 rounded-md text-sm text-gray-700 space-y-1">
+                                <p><strong>Respuestas del Módulo de Entrenamiento (Pág. 34):</strong></p>
+                                <ul class="list-disc list-inside text-xs space-y-1 mt-1">
+                                    <li><strong>Perder los estribos:</strong> Perder el control o la paciencia.</li>
+                                    <li><strong>Estar entre la espada y la pared:</strong> Estar en una situación difícil sin buenas opciones.</li>
+                                    <li><strong>Faltarle un tornillo:</strong> Actuar de forma alocada o poco sensata.</li>
+                                    <li><strong>Matar dos pájaros de un tiro:</strong> Resolver dos asuntos con una sola acción.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PESTAÑA III: TRABAJO COOPERATIVO (18 MINUTOS) -->
+                <div id="tab3" class="tab-content hidden space-y-6">
+                    <div class="bg-green-50 border-l-4 border-montanoVerdeGris p-4 rounded-r-md">
+                        <h2 class="text-lg font-bold text-montanoAzul flex items-center gap-2">
+                            <i class="fa-solid fa-users"></i> Taller en Equipos: "El Diccionario Ilustrado Chapín" (18 min)
+                        </h2>
+                        <p class="text-sm text-gray-700 mt-1">
+                            Trabajo en equipos de 4 integrantes aplicando el hábito Montano: <strong>Sinergizar</strong>.
+                        </p>
+                    </div>
+
+                    <!-- Roles dentro del Equipo -->
+                    <div class="grid md:grid-cols-4 gap-4">
+                        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm text-center">
+                            <div class="w-8 h-8 mx-auto bg-montanoAzul/10 text-montanoAzul rounded-full flex items-center justify-center font-bold mb-1 text-sm">1</div>
+                            <h4 class="font-bold text-montanoAzul text-xs md:text-sm">Coordinador/a</h4>
+                            <p class="text-xs text-gray-600 mt-1">Organiza el tiempo y asegura la participación activa de todos.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm text-center">
+                            <div class="w-8 h-8 mx-auto bg-montanoAmarillo/30 text-montanoAzul rounded-full flex items-center justify-center font-bold mb-1 text-sm">2</div>
+                            <h4 class="font-bold text-montanoAzul text-xs md:text-sm">Redactor del Sentido</h4>
+                            <p class="text-xs text-gray-600 mt-1">Escribe la expresión y define claramente su significado figurado.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm text-center">
+                            <div class="w-8 h-8 mx-auto bg-montanoVerdeGris/20 text-montanoVerdeGris rounded-full flex items-center justify-center font-bold mb-1 text-sm">3</div>
+                            <h4 class="font-bold text-montanoAzul text-xs md:text-sm">Ilustrador/a Contraste</h4>
+                            <p class="text-xs text-gray-600 mt-1">Dibuja la versión LITERAL (graciosa) vs. la versión FIGURADA (real).</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm text-center">
+                            <div class="w-8 h-8 mx-auto bg-montanoAzulClaro/30 text-montanoAzul rounded-full flex items-center justify-center font-bold mb-1 text-sm">4</div>
+                            <h4 class="font-bold text-montanoAzul text-xs md:text-sm">Vocero/a Chapín</h4>
+                            <p class="text-xs text-gray-600 mt-1">Presenta la tarjeta en la plenaria explicando cómo se usa en Guatemala.</p>
+                        </div>
+                    </div>
+
+                    <!-- Reto del Trabajo Cooperativo -->
+                    <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm space-y-3 text-sm">
+                        <h3 class="font-bold text-montanoAzul text-sm md:text-base flex items-center gap-2">
+                            <i class="fa-solid fa-palette"></i> Instrucciones de la Ficha Ilustrada:
+                        </h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                            <li>Elijan una expresión guatemalteca o del libro (ej. <em>"A un paso de perico"</em>, <em>"Estar hasta las manitas"</em>, <em>"Chispudito"</em> o <em>"Meter la pata"</em>).</li>
+                            <li>En una hoja o ficha, dividan el espacio en dos cuadros: 
+                                <span class="text-montanoAzul font-semibold">Lado Izquierdo: Dibujo del Sentido Literal</span> (Ej. un loro dando un paso).
+                                <span class="text-montanoVerdeGris font-semibold">Lado Derecho: Dibujo del Sentido Figurado</span> (Ej. dos lugares muy cercanos).</li>
+                            <li>Escriban una oración original donde utilicen correctamente la expresión idiomática.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- PESTAÑA IV: PLENARIA & EVALUACIÓN (12 MINUTOS) -->
+                <div id="tab4" class="tab-content hidden space-y-6">
+                    <div class="bg-purple-50 border-l-4 border-montanoVerdeOliva p-4 rounded-r-md">
+                        <h2 class="text-lg font-bold text-montanoAzul flex items-center gap-2">
+                            <i class="fa-solid fa-gamepad"></i> IV) Plenaria & Juego Interactivo (12 min)
+                        </h2>
+                        <p class="text-sm text-gray-700 mt-1">
+                            Presentación de las fichas ilustradas y verificación interactiva de aprendizajes.
+                        </p>
+                    </div>
+
+                    <!-- Juego Interactivo: Desafío de Modismos -->
+                    <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                        <h3 class="font-bold text-montanoAzul mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-puzzle-piece text-montanoAmarillo"></i> Trivia Express: "Adivina el Sentido Figurado"
+                        </h3>
+                        <div id="trivia-box" class="bg-montanoFondo p-4 rounded-lg text-center space-y-4">
+                            <p id="trivia-question" class="font-semibold text-gray-800 text-base">
+                                Cargando pregunta...
+                            </p>
+                            <div id="trivia-options" class="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-md mx-auto">
+                                <!-- Opciones cargadas por JS -->
+                            </div>
+                            <div id="trivia-feedback" class="font-bold text-sm h-6"></div>
+                        </div>
+                    </div>
+
+                    <!-- RÚBRICA INTERACTIVA DE EVALUACIÓN PARA LA PLENARIA -->
+                    <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm space-y-4">
+                        <div class="flex justify-between items-center flex-wrap gap-2">
+                            <h3 class="font-bold text-montanoAzul text-base flex items-center gap-2">
+                                <i class="fa-solid fa-clipboard-check text-montanoVerdeGris"></i> Rúbrica de Plenaria - Expresiones Idiomáticas
+                            </h3>
+                            <span class="text-xs bg-montanoAzul/10 text-montanoAzul px-2 py-1 rounded font-semibold">Evaluación Sumativa</span>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs md:text-sm border-collapse border border-gray-200">
+                                <thead>
+                                    <tr class="bg-montanoAzul text-white">
+                                        <th class="p-2 border">Criterio de Evaluación</th>
+                                        <th class="p-2 border text-center w-28">Excelente (3 pts)</th>
+                                        <th class="p-2 border text-center w-28">Satisfactorio (2 pts)</th>
+                                        <th class="p-2 border text-center w-28">En Proceso (1 pt)</th>
+                                        <th class="p-2 border text-center w-20">Punteo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-2 border font-medium">1. Distinción Literal vs. Figurado</td>
+                                        <td class="p-2 border text-gray-600 text-xs">Diferencia con total claridad el sentido figurado del literal con dibujos y explicaciones.</td>
+                                        <td class="p-2 border text-gray-600 text-xs">Diferencia ambos sentidos pero con leve imprecisión en el dibujo o concepto.</td>
+                                        <td class="p-2 border text-gray-600 text-xs">Confunde el sentido literal con el figurado durante la exposición.</td>
+                                        <td class="p-2 border text-center font-bold text-montanoAzul">
+                                            <select onchange="updateScore()" class="rubric-score rounded border border-gray-300 p-1">
+                                                <option value="3">3</option>
+                                                <option value="2">2</option>
+                                                <option value="1">1</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border font-medium">2. Uso Adecuado en Oración</td>
+                                        <td class="p-2 border text-gray-600 text-xs">Construye una oración contextualizada donde la expresión se usa correctamente.</td>
+                                        <td class="p-2 border text-gray-600 text-xs">Construye la oración pero el contexto no aclara del todo su significado.</td>
+                                        <td class="p-2 border text-gray-600 text-xs">La oración utiliza la expresión de forma incorrecta o forzada.</td>
+                                        <td class="p-2 border text-center font-bold text-montanoAzul">
+                                            <select onchange="updateScore()" class="rubric-score rounded border border-gray-300 p-1">
+                                                <option value="3">3</option>
+                                                <option value="2">2</option>
+                                                <option value="1">1</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border font-medium">3. Sinergia y Roles en Equipo</td>
+                                        <td class="p-2 border text-gray-600 text-xs">Todos cumplen su rol (coordinador, redactor, ilustrador, vocero) activamente.</td>
+                                        <td class="p-2 border text-gray-600 text-xs">Cumplen sus roles pero un integrante asume la mayoría del trabajo.</td>
+                                        <td class="p-2 border text-gray-600 text-xs">Falta de organización y división clara de responsabilidades.</td>
+                                        <td class="p-2 border text-center font-bold text-montanoAzul">
+                                            <select onchange="updateScore()" class="rubric-score rounded border border-gray-300 p-1">
+                                                <option value="3">3</option>
+                                                <option value="2">2</option>
+                                                <option value="1">1</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border font-medium">4. Expresión Oral y Modulación</td>
+                                        <td class="p-2 border text-gray-600 text-xs">El vocero expone con voz audible, tono entusiasta y seguridad en el tema.</td>
+                                        <td class="p-2 border text-gray-600 text-xs">Expresión clara pero con volumen bajo o cierta inseguridad.</td>
+                                        <td class="p-2 border text-gray-600 text-xs">Dificultad para hacerse entender durante la presentación.</td>
+                                        <td class="p-2 border text-center font-bold text-montanoAzul">
+                                            <select onchange="updateScore()" class="rubric-score rounded border border-gray-300 p-1">
+                                                <option value="3">3</option>
+                                                <option value="2">2</option>
+                                                <option value="1">1</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Total Obtenido -->
+                        <div class="flex justify-between items-center pt-2 bg-gray-50 p-3 rounded-lg">
+                            <span class="font-bold text-gray-700">Punteo Total Obtenido:</span>
+                            <span id="total-score" class="text-xl font-extrabold text-montanoAzul">12 / 12 pts</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="bg-montanoAzul text-white text-center py-3 text-xs mt-auto">
+        <p>Colegio Montano &copy; 2027 - Pizarra Digital Interactiva para el Aula Presencial</p>
+    </footer>
+
+    <!-- LÓGICA DE INTERACTIVIDAD JAVASCRIPT -->
+    <script>
+        // Cambiar entre Pestañas de la Secuencia Didáctica
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+                content.classList.remove('block');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(tabId).classList.add('block');
+            document.getElementById('btn-' + tabId).classList.add('active');
+        }
+
+        // Alternar Soluciones Desplegables
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            content.classList.toggle('open');
+        }
+
+        // Función Pantalla Completa
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error al activar pantalla completa: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Actualizar Punteo de la Rúbrica
+        function updateScore() {
+            const selects = document.querySelectorAll('.rubric-score');
+            let total = 0;
+            selects.forEach(select => {
+                total += parseInt(select.value);
+            });
+            document.getElementById('total-score').innerText = total + " / 12 pts";
+        }
+
+        // TRIVIA INTERACTIVA DE EXPRESIONES IDIOMÁTICAS
+        const triviaData = [
+            {
+                q: "Si alguien dice 'Ese examen fue pan comido', ¿qué quiere decir?",
+                options: [
+                    "Que llevó comida al examen",
+                    "Que el examen estuvo muy fácil",
+                    "Que el examen tenía forma de pan",
+                    "Que no pudo responder nada"
+                ],
+                correct: 1
+            },
+            {
+                q: "La expresión 'Andarse por las ramas' significa:",
+                options: [
+                    "Subirse a un árbol para hablar",
+                    "Caminar con mucho cuidado",
+                    "Evadir el tema principal de una conversación",
+                    "Llegar muy temprano a la clase"
+                ],
+                correct: 2
+            },
+            {
+                q: "En Guatemala decimos que dos lugares están 'a un paso de perico' para indicar que:",
+                options: [
+                    "Están muy lejanos",
+                    "Tienen muchos pájaros",
+                    "Están muy cerca uno del otro",
+                    "Son lugares peligrosos"
+                ],
+                correct: 2
+            },
+            {
+                q: "¿Por qué NO podemos decir 'la pata fue metida por él' en lugar de 'meter la pata'?",
+                options: [
+                    "Porque las expresiones idiomáticas son INVARIABLES",
+                    "Porque es una falta de ortografía",
+                    "Porque cambia el idioma a inglés",
+                    "Porque es un poema"
+                ],
+                correct: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        function loadTrivia() {
+            const q = triviaData[currentQuestion];
+            document.getElementById('trivia-question').innerText = q.q;
+            const optionsDiv = document.getElementById('trivia-options');
+            optionsDiv.innerHTML = '';
+            document.getElementById('trivia-feedback').innerText = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "bg-white hover:bg-montanoAzul hover:text-white border border-montanoAzul text-montanoAzul font-medium py-2 px-3 rounded-lg text-xs md:text-sm transition shadow-sm";
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(idx);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIdx) {
+            const q = triviaData[currentQuestion];
+            const feedback = document.getElementById('trivia-feedback');
+            if (selectedIdx === q.correct) {
+                feedback.className = "font-bold text-sm text-green-600";
+                feedback.innerText = "¡Excelente! Has comprendido el sentido figurado.";
+            } else {
+                feedback.className = "font-bold text-sm text-red-500";
+                feedback.innerText = "¡Cuidado! Estás cayendo en el sentido literal. Intenta de nuevo.";
+            }
+
+            setTimeout(() => {
+                currentQuestion = (currentQuestion + 1) % triviaData.length;
+                loadTrivia();
+            }, 2000);
+        }
+
+        // Inicialización al cargar la página
+        window.onload = function() {
+            loadTrivia();
+            updateScore();
+        };
+    </script>
+</body>
+</html>
